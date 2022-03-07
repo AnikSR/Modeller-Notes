@@ -5,7 +5,16 @@ done by:
 
 2. Evaluate the template using evaluate_template.py script.
 
-3. Plot both these using plot_profiles.py. A significant deviation of the model from the template means the models is bust.
+3. In both of these scripts, a Model object is created by the constructor complete_pdb(). Like the default constructor, the respective pdb file and if there's
+   any chains, both are argument for this constructor. The constructor can be called after imporing the necessary modules, creating the environment object and
+   reading necessary topology and parameter files.
+
+4. The model profile, named [protein_name].profile, is created by the assess_dope() function, which is a member of the Selection class. So, a Selection object
+   has to be created to call this function. Among other things, the output file name is one of the arguments of assess_dope().
+
+5. Plot both these using plot_profiles.py, which basically uses matplotlib to make the plot.
+
+6. A significant deviation of the model from the template means the models is bust.
 
 
 Again, automated search and replace the model and template name is the easiest way to dress the python scripts for specific template/query model.

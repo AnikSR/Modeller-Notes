@@ -7,16 +7,18 @@ Align the query sequence with the chosen template:
 										 is 'max_gap_length'. But it has many intrinsic arguments.
 									(ii) To input the template and the query for model building, first an empty Alignment object is generated.
 									(iii)Then Model object is built using the template PDB id and specific chain to be modeled as input.
-									(iv) This model is then appended to Alignment object using align.append() function.
-									(v)  The .ali file for the query sequence along with it's sequence code is also appened to the Alignment object.
+									(iv) This model is then appended to Alignment object using aln.append_model() function. 'aln' here is the alignment object.
+									(v)  The .ali file for the query sequence along with it's sequence code is also appened to the Alignment object using the
+										 aln.append() function.
 									(vi) After both the template and query is appended, the align2d() function is called to do the alignment.
 									(vii)The generated alignment files are writen using the align.write() function. Two distinct output is generated, one is
 									     in .ali format which is used in further scripts and another is human readable .pap format.
 
 3. The minimum thing about this script is that:
-									a. The template's PDB id is the input for the Model() and the Alignment object's append_model() function.
-									b. The query's ali file and sequence code is input into the append_model() as well.
-									c. Alignment.write() function's input is the combined name in [query]-[template] format.
+									a. The template's PDB id is the input for the Model() and the Alignment object's aln.append_model() function.
+									b. The query's ali file and sequence code is input for the aln.model().
+									c. Name given to the output .ali and .pap file is the argument for aln.write() function. Usually [query]-[template].[ext]
+									   is the format used for naming the output file.
 									d. However, the automatic search and replace option of the editor can be used to replace all the occurance of template and
 									   the query protein in just one command/click.
 
@@ -25,7 +27,7 @@ Building the model:
 --------------------
 1. The model is built by making a AutoModel object using its default constructor function AutoModel().
 
-2. The alignment file, the template (variable 'known'), and the query sequence (variable 'sequence') all are input of the AutoModel() function.
+2. The alignment file, the template (variable 'knowns'), and the query sequence (variable 'sequence') all are input of the AutoModel() function.
 
 3. The actual model building is done by the make() method of the alignment object.
 
