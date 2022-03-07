@@ -1,0 +1,11 @@
+modeller generates a plethora of parameters concering both the template and the model. However, a basic evaluation based on DOPE score and GA341 score can be
+done by:
+
+1. Evaluate the model using evaluate_model.py script.
+
+2. Evaluate the template using evaluate_template.py script.
+
+3. Plot both these using plot_profiles.py. A significant deviation of the model from the template means the models is bust.
+
+
+Again, automated search and replace the model and template name is the easiest way to dress the python scripts for specific template/query model.

@@ -1,0 +1,32 @@
+File types modeler works on
+---------------------------
+.ali 		- Alignment file, this is the input.
+.py			- The python script.
+.prf		- PICS Rules File - output of sequence alignment.
+.pap		- Output file for structural alignment.
+.txt/.log	- Workflow log.
+.pdb		- Output modeled protein.
+.PIR		- Protein Information Repository. This is the database against which sequence alignment will be performed.
+.bin		- The binary form of .PIR, this will be used for acutal alignment.
+
+Protein Information Repository database is available in two forms - pdb_95.PIR and pdball.PIR
+
+pdb_95.PIR - Protein is clustered by 95% identity.
+pdball.PIR - All the pdb file.
+
+Updated version of both of these *.PIR files are available in Modeller website (saillab.org/modeller/) under the "Data file download" menu.
+
+
+Workflow: Basic
+---------------
+1. Collect and prepare the sequence of the protein in question.
+
+2. Prepare/modify the script file to run MSA against the curated protein database and build the profile of query sequence.
+
+3. Select the template: make the initial selection, compare the templates in initial selection among them, and select the final template to model against.
+
+4. Align the query sequence with the tentative template sequence.
+
+5. Build model using AutoModel() function.
+
+6. Evaluate model by graphing the energy parameters of the template and the modeled structure.

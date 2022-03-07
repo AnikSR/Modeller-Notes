@@ -1,0 +1,32 @@
+Align the query sequence with the chosen template:
+---------------------------------------------------
+1. This is done using the align2d.py script.
+
+2. The script roughtly works like this:
+									(i)	 The alignment is done by the align2d() function from Alignment class. However the only argument the function takes
+										 is 'max_gap_length'. But it has many intrinsic arguments.
+									(ii) To input the template and the query for model building, first an empty Alignment object is generated.
+									(iii)Then Model object is built using the template PDB id and specific chain to be modeled as input.
+									(iv) This model is then appended to Alignment object using align.append() function.
+									(v)  The .ali file for the query sequence along with it's sequence code is also appened to the Alignment object.
+									(vi) After both the template and query is appended, the align2d() function is called to do the alignment.
+									(vii)The generated alignment files are writen using the align.write() function. Two distinct output is generated, one is
+									     in .ali format which is used in further scripts and another is human readable .pap format.
+
+3. The minimum thing about this script is that:
+									a. The template's PDB id is the input for the Model() and the Alignment object's append_model() function.
+									b. The query's ali file and sequence code is input into the append_model() as well.
+									c. Alignment.write() function's input is the combined name in [query]-[template] format.
+									d. However, the automatic search and replace option of the editor can be used to replace all the occurance of template and
+									   the query protein in just one command/click.
+
+
+Building the model:
+--------------------
+1. The model is built by making a AutoModel object using its default constructor function AutoModel().
+
+2. The alignment file, the template (variable 'known'), and the query sequence (variable 'sequence') all are input of the AutoModel() function.
+
+3. The actual model building is done by the make() method of the alignment object.
+
+4. The intrinsic argument for make() are given using two index attribute: starting_model and ending_model, they specify the number of models to be built.

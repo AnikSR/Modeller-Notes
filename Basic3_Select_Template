@@ -1,0 +1,61 @@
+Selecting template
+-------------------
+1. The alignment result is recorded in the .prf file in a human readable form.
+
+2. The first six lines gives the overall description of the file: No. of sequences, lenth of the query sequence, scoring matrix used etc.
+
+3. This description is then followed by the alignment table.
+
+4. The alignment is described in 13 columns:
+											(i)	  The first column contains the serial number.
+											(ii)  The 2nd column contains the pdb id of all the sequences.
+											(iii) The 3rd column indicates the type. 's' indicates that its a sequence without a known structure, 'x' indicates
+												  the structure for this sequence is known.
+											(iv)  The 4th column shows the iteration at which this sequence has been picked. "no_of_iteration" is one of the
+												  arguments of the prf.build() function.
+											(v)	  5th column shows the length of the respective sequence.
+											(vi)  The 6th and 7th column are the starting and ending position of the query sequence in the alignment. That
+												  is, from which position of the query sequence this current sequence starts aligning and to which position it
+												  ends.
+											(vii) The 8th and 9th column are the starting and ending position of the template sequence in the alignment. That
+											      is, at which position of the template the alignment starts, and at which position the alignment ends.
+											(viii)The number of equilvalent positions in the alignment. That is the 10th column reports the alignment coverage.
+												  But the total number, not the percentage.
+											(ix)  Column no. 11 reports the identity percentage of the alignment.
+											(x)	  The e-value of the alignment.
+											(xi)  The actual alignment.
+
+5. The pdb ids of the sequences that has a low e-value, high identity percentage and a good coverage length (col.10) is selected for the next step: comparison.
+
+6. These pdb files are then compared using compare.py script which first builds a multiple sequence alignment between them, then using that MSA, performs a
+   multiple structural alignment (based on least square fit).
+
+7. From this comparison data, suitable template number can be reduced further down. Usually, one sequence from each group is selected, based on identity score,
+   coverage and all the old parameters, but also with resolution and crystallographic R score (found in PDB file).
+
+
+Inner working of compare.py
+---------------------------
+1. An empty alignment object is first built, using the Environment object as initializer. Of course, for this step to take place, an Envirnoment object has to
+   be initialized first, which is done using the Environment() constructor function. Both of these objects are from modeller library.
+
+
+   		from modeller import *
+
+		env = Environment()
+		aln = Alignment(env)
+
+2. Appending the pdb file and specific chain of each template to the alignment object is the next step. This is done by first building an Model object using
+   the Model() constructor function, which takes the pdb file name and chain indicator as argument. These models are then appended to the alignment object
+   using the append_model() function of Append class. A for loop is used to append all the templates one by one.
+
+   		for (pdb, chain) in (('1b8p', 'A'), ('1bdm', 'A'), ('1civ', 'A')):
+    		m = Model(env, file=pdb, model_segment=('FIRST:'+chain, 'LAST:'+chain))
+    		aln.append_model(m, atom_files=pdb, align_codes=pdb+chain)
+
+3. Now, the aln.malign() function does the multiple sequence alignment, aln.malign3d() perfomrs the multiple structural alignment, the aln.compare_structures()
+   function compares the structures and aln.id_table() writes the output in the output file which is family.mat in the current case. In all these cases, 'aln'
+   is the Alignment object initialized earlier.
+
+4. Using the alignment matrix file in family.mat, the env.dendogram() function can be used to output the alignment tree. This tree is the main instrument to
+   make the final decision of which templates will be chosen.

@@ -1,0 +1,31 @@
+Prepare the sequence
+--------------------
+1. Download the FASTA format of the query sequence and rename the file and FASTA identifier if necessary.
+
+2. The first line of the .ali file contains the P1 code followed by the sequence identifier (also called sequence code), a bit like the .fasta files.
+
+3. The P1 code syntax:
+
+			>P1; [Protein name] [Other description, say from the FASTA GI]
+
+   This [protein name] is used in all the modeller script as ALIGN_CODE. Slight mismatch and modeller will through error (discussed in the note bellow).
+
+
+4. The second line of the .ali file must contain alignment directive. This directive consists of 10 different fields seperated by ':'. In the current example,
+   only 2 of this 10 fields are specified. The keyword "sequence" in the first field says that its a sequence without known structure. The second field contains
+   the sequence identifier. The complete 2nd line in the example looks like:
+
+   		sequence:query_grp40:::::::0.00: 0.00
+
+4. Every standard amino acid residue must be uppercase letter.
+
+5. The end of sequence must be marked with '*'. So the last line of the sequence will look like:
+
+		......................ITGAWSVVLNPLVTGYLGRGPGLKTVCAARTQGGKSQK*
+
+Note: modeller is very sensitive to the syntax of the line containing the P1 code. Any deviation from this syntax - say writing "> P1;" or ">p1 ;" instad of
+">p1;" and modeller will fail to recognize the .ali file and return the errors:
+
+		$ Protein specified in ALIGN_CODES(i) was not found in the alignment file; ALIGN_CODES( 1) = ALL
+
+Although looks enigmatic and unspecific, its clear from the error msg that modeller won't allow a single bit of anomany in the .ali file :p

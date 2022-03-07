@@ -1,0 +1,82 @@
+Preparing the script:
+----------------------
+1. The first step of homology modeling with modelller is to build a profile for the query sequence using multiple sequence alignment. This can be done using the
+   functions and objects provided in the modeller module. So, the python script starts with the import directive:
+
+			from modeller import *
+
+2. At the heart of profiling of is the profile build function, which is named prf.build() in current example. The scoring matrix, gap penalites, the database to
+   build profile against, E-value cuttoff etc are given as input to this function. The output is a PICS Rule file, where the profile - the alignment output is
+   recorded.
+
+			prf.build(seq_database, scoring_matrix, gap_penalties_tuple, no_of_iteration, check_profile_bool, E_value_cutoff)
+
+   All the lines before it, leads to the preparation for calling the prf.build() function.
+
+3. Now, profile.build() function is a member of the Alignment object. So, to call profile.build() function, first an Alignment object is needed to be declared.
+   This is easily done using Alignment() function, which takes Environmet object as input. So, the Environment object has to be declared and initialized first.
+
+4. Environment object is initialized using the Environ() function, which is its default constructor function for the Environment class. In the current script
+   ("build_profile.py"), the Environment object is named 'env'.
+
+   			env = Environ()
+
+5. Using the 'env', the Alignment object is then initialized:
+
+			aln = Alignment(env)
+
+6. Once the Alignment object is initialized, the Profile object can be initialized with a copy constructor. But before that, the alignment object needs to be
+   informed about the sequence file (.ali file). This is done using the append() function from the Alignment class:
+
+   			aln.append([quercy sequence].ali, alignment_format, alignment_code)
+
+7. Then the Profile object is created using the copy constructor to_profile():
+			
+			prf = aln.to_profile()
+
+   The profile object is finally ready. However, one of the input of the build function is yet to be prepared.
+
+8. The first input for the Profile.build() function is the curated sequence database object. This object is initialized with the default constructor function
+   that takes environment object as the argument:
+
+   			sdb = SequenceDB(env) 
+
+9. sdb then reads curated sequence database(pdb_95.pir or pdball.pir) converts it to a binary format (pdb_95.bin, pdball.bin) then reads the binary databse file
+   using sdb.read(), sdb.writ() and sdb.read() function respectivly.
+
+10. After all these are done, the prf.build() is finally called to build the sequence profile.
+
+11. After this is done, prf.write() function is used to write the profile/alignment file (build_profile.prf). Then the alignment object is updated and written
+    as an updated .ali file (build_profile_all.ali or build_profile_95.ali).
+
+   
+
+
+Running the script:
+-------------------
+1. modeller must be properly registered before it could be used for anything. For this, proper license key must be earned from the modeller registration page.
+
+2. Once license key is obtained, registration is done by modifying the "license" variable in "config.py" file located in:"/usr/lib/modeller10.1/modlib/modeller"
+
+3. If the script is run without proper registration, modeller will through error message saying that the existing license is not valid. However, this error
+   message also directs towards the proper action and appropriate directory.
+
+4. The alignment script can be run with the command "$mod10.1 [ScriptName].py". The Modeller software calls python to run the functions. If modeller is unable
+   to find python, it might show errors like:
+
+			Could not find platform independent libraries <prefix>
+			Could not find platform dependent libraries <exec_prefix>
+			Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+
+   Adding "#! [path to python]" as the first line of the script might solve this problem. For Linux or any Unix flavor, the shebang line would be:
+
+   			#! /usr/bin/python3
+
+5. However, running the script by calling the python interpreter:
+
+			$ python3 [ScriptName].py > [OutputFile].[ext]
+
+   will also do and solve the problem in a much smoother way.
+
+6. The alignment screen will output the .bin database file and prepare the build_profiel.ali and build_profile.prf file. The last two files will be used for
+   building the tirtiary model of the query protein based on homology.

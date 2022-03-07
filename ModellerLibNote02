@@ -1,0 +1,72 @@
+Object-Method/Attribute Map
+----------------------------
+# Comment to give an elavorate description of the object.
+Object				# Comment to point out an important point about the object.
+  |
+  ---> method_1(possible parameter list)	# Comment describing method_1().
+  :											# This comment can span many lines to give an elaborate explation of the object.
+  :
+  ---> method_n(possible parameter list)	# Comment describing method_n().
+  :
+  ---> Attribute_1		# Comment describing the first attribute.
+  :
+  ---> Attribute_m		# Comment describing the m_th attribute.
+
+
+Actual Content
+---------------
+Alignment
+	|
+	---> Alignment()				# Default constructor function for Alignment object.
+	|
+	---> append(file,				# File to appened to.
+	|			alignment_format,	# Options are PIR and BINARY.
+	|			align_codes)
+	|		   
+	|
+	---> to_profile()						# Copy constructor function.
+	|
+	|
+	---> build(alignment_database,			# build() is another constructor function than can initiate the object with different values.
+	|		   alignment_matrix_offset,
+	|		   rr_file,						# The scoring matrix.
+	|		   gap_pentaly_value,			# Gap penalty for the scoring matrix.
+	|		   n_prof_iterations,			# How many times the search will be iterated.
+	|		   check_profile_bool_variable,	# Whether or not to check profile for deviation.
+	|		   max_alignment_evalue)		# E-value cut-off.
+	|
+	|
+	---> to_alignment()				# Constructior function.
+	|
+	|
+	---> write(file,				# File to write to.
+	|	 	   alignment_format)	# Options are PIR and BINARY.)
+	|
+	|
+	---> append_model(model_object,	# Actual homology model.
+	|				  atom_file,	# Atomic coordinate file format, like PDB.
+	|				  align_codes)	# What to align? Only coordinate (PDB), overall shape(chain) or both (PDB+chain)?
+	|
+	|
+	---> align2d(max_gap_length)	# Gap length cutoff.
+	|
+	|
+	---> malign()					# Multiple alignment.
+	|
+	---> malign3d()					# Multiple alignment of the 3d structures (using least square superposition, Distance RMS etc).
+	|
+	---> compare_structure()		# Compare the 3d structures.
+	|
+	---> id_table(Matrix_file)		# Build an ID table of pairwise alignment distance among sequences.
+
+
+
+Selection
+	|
+	---> Selection(model_object)	# The constructor of selection object.
+	|
+	| 
+	---> assess_dope(output,
+					 file,
+					 normalize_profile,
+					 smoothing_window)

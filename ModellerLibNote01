@@ -1,0 +1,105 @@
+Object-Method/Attribute Map
+----------------------------
+# Comment to give an elavorate description of the object.
+Object				# Comment to point out an important point about the object.
+  |
+  ---> method_1(possible parameter list)	# Comment describing method_1().
+  :
+  - . . . 
+  :
+  ---> method_i(possible parameter list)	# Comment about the method. It can be a single line comment.
+  |											# This comment can span many lines to give an elaborate explation of the object.
+  |
+  :
+  ---> method_n(possible parameter list)	# Comment describing method_n().
+  :
+  :
+  ---> attribute_1
+  :
+  ---> attribute_m		# Comments decribing the attribute.
+
+
+
+Actual Contents
+===============
+global		# global isn't an object, it means the following are global functions/variables defined directly in modeller library.
+   |
+   ---> minmax_db_seq_len(min_position_in the sequence,
+   |					  maximum_position in the sequence)
+   |
+   ---> gap_penalties_1d(mismatch_penalty,
+   						 penalty_for_similar_aa)
+   
+
+log
+ |
+ ---> verbose()
+
+
+
+Environ
+   |
+   ---> Environ()	# The constructor function for the Environ object.
+   |
+   |
+   |	# Build the dendogram for comparing structures.
+   ---> dendogram(matrix_file,	# Alignment matrix.
+   |			  cluster_cut)	# Cutoff value.
+   |
+   |	# libs is a member class of Environ class. topology and parameters are member classes of libs class.
+   ---> libs.topology.read(file)	# Read the topology.	
+   |
+   ---> libs.parameters.read(file)	# Read the parameters.
+   |
+   |
+   ---> io.atom_file_directory		# io is another member class in Environ class. atom_file_directory is clearly one of io class' attribute.
+
+Model
+  |	   # The default constructor function of the Model class.
+  ---> Model(env,				# The environment object.
+  |   		 file_format,		# File format such as PDB.
+  |			 model_segment)		# Start and end of segment. This argument ensures that only one chain is used.
+  |
+  |	   # Another constructor function.
+  ---> complete_pdb(env,		# The environment object.
+  					pdb_file	# The molecular structure file in PDB format.
+
+
+Automodel
+	|
+	|	# The constructor function for the Automodel class.
+	---> Automodel(enviorment,		# The environemtn object.
+	|			  align_file,		# Both the template and query sequence in PIR format, in one file.
+	|			  known,			# The template protein's PDB id.
+	|			  sequence,			# The query protein - acc. ID used.
+	|			  assess_method		# Scores from various asses methods, input as a tuple.
+	|
+	---> make()		# Function that actually calculates the model based on all the input.
+	|
+	|
+	---> starting_model	# start_model and end_model are two iterator index attribute of the Automodel class.
+	|					# start_model is the starting index, end_model is the ending index.
+	---> ending_model	# The number of different models generated are: [(end_model - start_model)+1].
+
+
+assess
+	|
+	---> DOPE	# DOPE score.
+	|
+	---> GA341	# GA341 score.
+
+
+sequence_db
+    |
+	---> SequenceDB(environment_object)	# Probably the construction function.
+   	|
+	---> read(sequence_database_file,	
+	|		  sequence_database_format,	# Choises are PIR and BINARY.
+	|		  chains_list,
+	|		  sequence_length,
+	|		  Clear_sequence_bool_variable)
+	|		 
+	|
+	---> write(sequence_database_file,
+			  sequence_database_format,
+			  chains_list)

@@ -1,0 +1,7 @@
+Namespace:
+		modeller
+		pylab	# From matplotlib.
+
+Modules:
+		modeller.scripts
+		modeller.automodel
