@@ -1,0 +1,96 @@
+Step 1: Collect the sequence and prepare the script
+----------------------------------------------------
+TLR5_BAB43955_1.ali		# The curated sequence file.
+build_profile.py		# The script to build profile.
+pdball.pir				# The curated sequence database.
+
+
+
+Step 2: Run the script - build the sequence profile
+----------------------------------------------------
+Command:
+		$ build_profile.py > build_profile.log
+
+Files:
+	build_profile.log		# The log file of the run.
+	build_profile.prf		# PICS rules file, the output of the alignment.
+	build_profile.ali		# The alignment result in .ali format.
+	pdball.bin				# The curated sequence databse in binary format.
+
+
+
+Step 3: Selecting the template
+--------------------------------
+Command:
+		$ python3 compare.py > compare.py
+
+Files:
+	family.mat		# The alignment matrix.
+	compare.log		# The log file of the run. The tree representation of the alignment is also stroed here.
+
+
+
+Step 4: Align the query sequence with the template
+---------------------------------------------------
+Command:
+		$ python3 align2d.py > align2d.log
+
+Files:
+	align2d.log					# The Log file of the run.
+	TLR5_BAB43955_1-5wyzA.pap	# The alignment output file.
+	TLR5_BAB43955_1-5wyzA.ali	# The alignment output in PIR format, for further use by modeller.
+
+
+
+Step 5: Model building
+----------------------
+Command:
+		$ python3 model-single.py > model-single.log
+
+Files:
+	model-single.log				# The log file for model building step.
+	TLR5_BAB43955_1.ini				# Initialization file.
+	TLR5_BAB43955_1.rsr				# Restrain parameters for modeling.
+	TLR5_BAB43955_1.sch				# SCH file.
+ 	TLR5_BAB43955_1.B99990001.pdb	# Modeled structure - 1.
+	TLR5_BAB43955_1.B99990002.pdb	# Modeled structure - 2.
+	TLR5_BAB43955_1.B99990003.pdb	# Modeled structure - 3.
+	TLR5_BAB43955_1.B99990004.pdb	# Modeled structure - 4.
+	TLR5_BAB43955_1.B99990005.pdb	# Modeled structure - 5.
+	TLR5_BAB43955_1.D00000001		# Energy shift file for model 1.
+	TLR5_BAB43955_1.D00000002		# Energy shift file for model 2.
+	TLR5_BAB43955_1.D00000003		# Energy shift file for model 3.
+	TLR5_BAB43955_1.D00000004		# Energy shift file for model 4.
+	TLR5_BAB43955_1.D00000005		# Energy shift file for model 5.
+	TLR5_BAB43955_1.V99990001		# Heavy relative violation in model 1.
+	TLR5_BAB43955_1.V99990002		# Heavy relative violation in model 2.
+	TLR5_BAB43955_1.V99990003		# Heavy relative violation in model 3. 
+	TLR5_BAB43955_1.V99990004		# Heavy relative violation in model 4.
+	TLR5_BAB43955_1.V99990005		# Heavy relative violation in model 5.
+
+
+
+Step 6: Model Evaluation
+------------------------
+# DOPE score of the model.
+Command:
+		$ python3 evaluate_model.py > evaluate_model.log
+Files:
+	evaluate_model.log			# Log file of the run.
+	TLR5_BAB43955_1_3.profile	# Model profile.
+
+
+# DOPE score of the template.
+Command:
+		$ python3 evaluate_template.py > evaluate_template.log
+Files:
+	evaluate_template.log	# The log file of the run.
+	5wyzA.profile			# Profile of the template recording the potential energy of all the AAs.
+
+
+# Plot of the both DOPE scores for comparison.
+Command:
+		$ python3 plot_profiles.py > plot_profiles.log
+Files:
+	plot_profile.log	# Log file of the run.
+	dope_profile.png	# The plot of the template and model DOPE score.
